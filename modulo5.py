@@ -10,10 +10,10 @@ def ejecutar_pruebas_y_demo():
     # Datos de prueba para inicializar el archivo binario
     # Estructura: (dni, apellido, nombre, telefono, prioridad)
     pacientes_iniciales = [
-        (48313594, "Gomez", "Juan", "112233", 2),
-        (22337719, "Lopez", "Ana", "445566", 1),
-        (33333455, "Lepera", "Luis", "778899", 1),
-        (44444444, "Zarate", "Maria", "001122", 3),
+        (48313594, "Gomez", "Juan", "1122330356", 2),
+        (22337719, "Lopez", "Ana", "4455668977", 1),
+        (33333455, "Lepera", "Luis", "7788994467", 1),
+        (44444444, "Zarate", "Maria", "4311225512", 3),
     ]
     
     print("--- [Módulo 1] Inicializando Persistencia Binaria ---")
@@ -35,16 +35,16 @@ def ejecutar_pruebas_y_demo():
     
     # Caso 1: Caso Con Solución
     disponibilidad_viable = {
-        1111: ["08:00", "08:30"],
-        2222: ["08:00"],
-        3333: ["09:00", "09:30"]
+        48313594: ["08:00", "08:30"],
+        22337719: ["08:00"],
+        33333455: ["09:00", "09:30"]
     }
     
     # Caso 2: Caso Sobre-restringido 
     disponibilidad_inviable = {
-        1111: ["08:00"],
-        2222: ["08:00"], 
-        3333: ["09:00"]
+        48313594: ["08:00"],
+        22337719: ["08:00"], 
+        33333455: ["09:00"]
     }
 
     # Interfaz de Menú 
