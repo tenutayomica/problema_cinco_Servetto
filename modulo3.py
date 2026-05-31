@@ -60,7 +60,18 @@ def listar_pacientes_ordenados(ruta: str, criterio: str) -> list:
         return merge_sort(pacientes_ordenados_apellido, clave_idx=4)
     else:
         raise ValueError("Criterio de ordenamiento no válido.")
+        
+"""
+(f) La estabilidad del algoritmo de ordenamiento es importante para el criterio = "prioridad" porque, en este
+caso, se debe respetar un orden compuesto: primero por prioridad (de mayor a menor) y luego por apellido
+alfabéticamente. Gracias a la estabilidad, los pacientes mantendrán su orden relativo de apellidos en la
+segunda pasada de ordenamiento por prioridad, lo que garantiza que el resultado final esté de acuerdo a las
+exigencias del problema.
 
+Si el ordenamiento no fuera estable, podríamos obtener un resultado donde pacientes con la misma prioridad
+aparecen mezclados sin respetar el orden alfabético de sus apellidos, ya que su orden relativo de apellidos
+podría alterarse durante el proceso de ordenamiento por prioridad.
+"""
 # Validación Módulo 3
 
 if __name__ == "__main__":
