@@ -1,5 +1,5 @@
 import struct
-
+import os
 
 # --- Constantes globales ---
 FORMATO = '<i30s24s16sB'
@@ -65,3 +65,30 @@ def leer_paciente(archivo, k: int) -> tuple:
     if len(registro_bytes) < TAM_REGISTRO:
         raise IndexError("El índice del registro solicitado está fuera de los límites del archivo.")
     return desempaquetar_paciente(registro_bytes)
+
+# Validación Módulo 1
+
+if __name__ == "__main__":
+
+    print("=== Validando Módulo 1: Persistencia Binaria ===")
+    
+    ruta_test = "test_pacientes.dat"
+    pacientes_test = [
+        (111, "Gomez", "Juan", "123", 2),
+        (222, "Lopez", "Ana", "456", 1)
+    ]
+    
+    # Ejecutamos la función a probar
+    crear_archivo_pacientes(ruta_test, pacientes_test)
+    
+    # Verificar que os.path.getsize coincide con cantidad * TAM_REGISTRO
+    tam_esperado = len(pacientes_test) * TAM_REGISTRO
+    tam_real = os.path.getsize(ruta_test)
+    
+    print(f"Tamaño esperado: {tam_esperado} bytes | Real: {tam_real} bytes.")
+    assert tam_real == tam_esperado, "ERROR: El tamaño físico en disco no coincide."
+    print("Módulo 1 validado exitosamente.\n")
+    
+    # Limpieza
+    if os.path.exists(ruta_test):
+        os.remove(ruta_test)

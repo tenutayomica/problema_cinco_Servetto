@@ -1,5 +1,5 @@
 import os
-from modulo1 import TAM_REGISTRO, desempaquetar_paciente
+from modulo1 import TAM_REGISTRO, desempaquetar_paciente, crear_archivo_pacientes
 
 def _merge(izq: list, der: list, clave_idx: int) -> list:
     """Función auxiliar para fusionar de forma estable dos sublistas ordenadas."""
@@ -60,3 +60,35 @@ def listar_pacientes_ordenados(ruta: str, criterio: str) -> list:
         return merge_sort(pacientes_ordenados_apellido, clave_idx=4)
     else:
         raise ValueError("Criterio de ordenamiento no válido.")
+
+# Validación Módulo 3
+
+if __name__ == "__main__":
+
+    print("=== Validando Módulo 3: Reportes y Ordenamiento ===")
+    
+    ruta_test = "test_reportes.dat"
+    # Datos mezclados para forzar el desempate por estabilidad
+    pacientes_test = [
+        (444, "Zarate", "Maria", "111", 3),
+        (111, "Gomez", "Juan", "222", 2),
+        (333, "Gomez", "Luis", "333", 1),
+        (222, "Arce", "Ana", "444", 1),
+    ]
+    crear_archivo_pacientes(ruta_test, pacientes_test)
+    
+    # Contrastar el resultado de listar_pacientes_ordenados contra sorted()
+    # 1. Validación por Apellido
+    resultado_propio_ape = listar_pacientes_ordenados(ruta_test, "apellido")
+    resultado_nativo_ape = sorted(pacientes_test, key=lambda x: x[1])
+    assert resultado_propio_ape == resultado_nativo_ape, "Error: El ordenamiento por apellido difiere de sorted()."
+    
+    # 2. Validación por Prioridad (Estable: desempata por apellido)
+    resultado_propio_prio = listar_pacientes_ordenados(ruta_test, "prioridad")
+    # En sorted, para ordenar por prioridad y luego apellido pasamos una tupla en la key
+    resultado_nativo_prio = sorted(pacientes_test, key=lambda x: (x[4], x[1]))
+    assert resultado_propio_prio == resultado_nativo_prio, "Error: El ordenamiento por prioridad difiere de sorted()."
+    
+    print("Módulo 3 validado exitosamente.\n")
+    if os.path.exists(ruta_test):
+        os.remove(ruta_test)

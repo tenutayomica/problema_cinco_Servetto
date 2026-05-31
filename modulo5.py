@@ -13,16 +13,11 @@ def ejecutar_pruebas_y_demo():
         (48313594, "Gomez", "Juan", "1122330356", 2),
         (22337719, "Lopez", "Ana", "4455668977", 1),
         (33333455, "Lepera", "Luis", "7788994467", 1),
-        (44444444, "Zarate", "Maria", "4311225512", 3),
+        (44444444, "Zarate", "Maria", "4311226674", 3),
     ]
     
     print("--- [Módulo 1] Inicializando Persistencia Binaria ---")
     crear_archivo_pacientes(ruta_db, pacientes_iniciales)
-    # Verificación del tamaño físico esperado
-    tam_esperado = len(pacientes_iniciales) * TAM_REGISTRO
-    tam_real = os.path.getsize(ruta_db)
-    print(f"Tamaño esperado en disco: {tam_esperado} bytes. Real: {tam_real} bytes.")
-    assert tam_esperado == tam_real, "Error en la persistencia del tamaño binario."
     
     print("\n--- [Módulo 2] Construyendo Índices en Memoria ---")
     indice_dni, indice_ape = construir_indices(ruta_db)

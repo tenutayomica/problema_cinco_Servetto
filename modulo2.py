@@ -1,5 +1,5 @@
 import os
-from modulo1 import TAM_REGISTRO, desempaquetar_paciente, leer_paciente
+from modulo1 import TAM_REGISTRO, desempaquetar_paciente, leer_paciente, crear_archivo_pacientes
 
 def construir_indices(ruta: str) -> tuple:
     """
@@ -59,3 +59,29 @@ def buscar_por_dni(archivo, indice_por_dni: dict, dni: int) -> tuple:
     
     posicion_k = indice_por_dni[dni]
     return leer_paciente(archivo, posicion_k)
+
+# Validación Módulo 2
+
+if __name__ == "__main__":
+    
+    print("=== Validando Módulo 2: Índices y Búsqueda Eficiente ===")
+    
+    ruta_test = "test_indices.dat"
+    pacientes_test = [(999, "Test", "Paciente", "000", 1)]
+    crear_archivo_pacientes(ruta_test, pacientes_test)
+    
+    idx_dni, _ = construir_indices(ruta_test)
+    
+    # Comprobar que toda búsqueda por DNI devuelve el registro correcto
+    with open(ruta_test, 'rb') as f:
+        resultado = buscar_por_dni(f, idx_dni, 999)
+        assert resultado is not None, "Error: No se encontró el DNI indexado."
+        assert resultado[0] == 999 and resultado[1] == "Test", "Error: Los datos recuperados son incorrectos."
+        
+        # Comprobar camino de falla
+        resultado_inexistente = buscar_por_dni(f, idx_dni, 12345)
+        assert resultado_inexistente is None, "Error: Se devolvió un registro para un DNI inexistente."
+        
+    print("Módulo 2 validado exitosamente.\n")
+    if os.path.exists(ruta_test):
+        os.remove(ruta_test)

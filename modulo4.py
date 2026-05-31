@@ -35,3 +35,28 @@ def asignar_agenda(pacientes_del_dia: list, franjas: list, disponibilidad: dict)
         return None # Agotó las opciones para este camino sin éxito
 
     return _backtracking(0, asignacion_inicial)
+
+# Validación Módulo 4
+
+if __name__ == "__main__":
+    print("=== Validando Módulo 4: Agenda y Backtracking ===")
+    
+    franjas_test = ["08:00", "08:30", "09:00"]
+    pacientes_test = [111, 222]
+    dispo_test = {111: ["08:00"], 222: ["08:00", "08:30"]}
+    
+    asignacion = asignar_agenda(pacientes_test, franjas_test, dispo_test)
+    assert asignacion is not None, "Error: Debería existir una solución válida."
+    
+    # Verificar manualmente disponibilidad y unicidad
+    pacientes_asignados = list(asignacion.values())
+    
+    # 1. Verificación de Unicidad (No hay colisiones de franjas ni pacientes duplicados)
+    assert len(pacientes_asignados) == len(set(pacientes_asignados)), "ERROR: Hay pacientes duplicados en diferentes franjas."
+    
+    # 2. Verificación de Disponibilidad
+    for franja, dni in asignacion.items():
+        assert franja in franjas_test, "Error: Se asignó una franja inválida."
+        assert franja in dispo_test[dni], f"Error: El paciente {dni} no está disponible en la franja {franja}."
+        
+    print("Módulo 4 validado exitosamente.\n")
